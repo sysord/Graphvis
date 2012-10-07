@@ -1,0 +1,169 @@
+		<h:form id="mainForm">	
+			<div style="height:40%;width:49%; border:solid 1px; padding:2px; float:left">
+				<div id="dijGraphContainer" style="height:90%;">
+					
+					<p:graphvis id="dijGraph" title="Graphe Dijkstra" value="#{demoCSEventsBean.graphModel}"  widgetVar="myGraph" ajax="false"
+					
+						onItemClick="addLogMessage('click item:' + gvitem.getId());"		
+						onItemSelection="addLogMessage('Items selection:' + arrIdsToString(gvitems));"		
+						onItemUnselection="addLogMessage('Items deselection:' + arrIdsToString(gvitems));"		
+						onItemDblclick="addLogMessage('dblclick item:' + gvitem.getId());"		
+
+						onNodeClick="addLogMessage('click node:' + gvitem.getId());"		
+						onNodeSelection="addLogMessage('Nodes selection:' + arrIdsToString(gvitems));"		
+						onNodeUnselection="addLogMessage('Nodes deselection:' + arrIdsToString(gvitems));"		
+						onNodeDblclick="addLogMessage('dblclick node:' + gvitem.getId());"		
+
+						onEdgeClick="addLogMessage('click edge:' + gvitem.getId());"		
+						onEdgeSelection="addLogMessage('Edges selected:' + gvitems.length);"		
+						onEdgeUnselection="addLogMessage('Edges deselected:' + gvitems.length);"		
+						onEdgeDblclick="addLogMessage('dblclick edge:' + gvitem.getId());"		
+																
+					>
+										
+					</p:graphvis>
+												 
+			 	</div>			 	
+		 	</div>
+			<div id="stylePanel" style="margin-left:50%; width:30%;">
+				<p:fieldset >
+					<p:commandButton  value="generate new Graph"  style="width:100%" action="#{demoCSEventsBean.fillGraphModel()}" onsuccess="myGraph.synchronize(true)"/>										
+					<p:commandButton  type="button" value="reload graph from server"  style="width:100%" onclick="myGraph.reload()" />										
+					<p:commandButton  type="button" value="send graph to server"  style="width:100%" onclick="myGraph.synchronizeAll()" />										
+					<p:commandButton type="button" value="Remove selected nodes" onclick="removeSelectedNodes()" style="width:100%"/>										
+					<p:commandButton type="button" value="Create edge between selected nodes" onclick="createEdges()" style="width:100%"/>										
+					<p:commandButton type="button" value="Select all graph elements" onclick="selectAll()" style="width:100%"/>															
+					<br/><br/><b><h:outputText value="Style:"/></b> 
+					<h:panelGrid columns = "2" style="font-size:10px">
+						<h:outputText value="Layout:"/> 
+						<p:selectOneMenu label="Shape:" widgetVar="layoutSelector" onchange="myGraph.doLayout(layoutSelector.value);" >
+							<f:selectItem itemLabel="ForceDirected" itemValue="ForceDirected" />
+							<f:selectItem itemLabel="Circle" itemValue="Circle" />
+							<f:selectItem itemLabel="Radial" itemValue="Radial" />
+							<f:selectItem itemLabel="Tree" itemValue="Tree" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Shape:"/> 
+						<p:selectOneMenu label="Shape:" widgetVar="shapeSelector" onchange="addLogMessage(shapeSelector.value);" >
+							<f:selectItem itemLabel="ELLIPSE" itemValue="ELLIPSE" />
+							<f:selectItem itemLabel="RECTANGLE" itemValue="RECTANGLE" />
+							<f:selectItem itemLabel="TRIANGLE" itemValue="TRIANGLE" />
+							<f:selectItem itemLabel="DIAMOND" itemValue="DIAMOND" />
+							<f:selectItem itemLabel="HEXAGON" itemValue="HEXAGON" />
+							<f:selectItem itemLabel="OCTAGON" itemValue="OCTAGON" />
+							<f:selectItem itemLabel="PARALLELOGRAM" itemValue="PARALLELOGRAM" />
+						</p:selectOneMenu>
+						<h:outputText value="Color:"/> 
+						<p:colorPicker id="colorPicker" widgetVar="colorPicker" style="vertical-align:top"/>
+						<h:outputText value="Size:"/> 						
+						<p:spinner widgetVar="spinSize" value="10" min="10" max="50" size="2" style="vertical-align:top"/>
+					</h:panelGrid>
+					<p:commandButton type="button" onclick="applyStyleOnSelection()" value="Apply style on selection" style="width:100%"/>
+				</p:fieldset>						 	
+			</div>		 	
+			<div id="console" style="clear:left;width:50%; height:15%;overflow:auto">			 	
+			</div>		 	
+		</h:form>
+
+		<script type="text/javascript">
+		
+			$(document).ready(function() {
+				$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
+			});
+
+			function removeSelectedNodes(){
+				myGraph.getSelectedNodes().map(function(node){myGraph.removeNode(node.getId())});
+				myGraph.redraw();
+			}
+
+			function applyStyleOnSelection(){
+				var color = getSelectedColor();
+				var size = spinSize.value;
+				var shape = shapeSelector.value;
+				
+				myGraph.getSelectedNodes().map(
+					function(node){
+						node.setColor(color);
+						node.setSize(size);
+						node.setShape(shape);						
+					}
+				);
+
+				myGraph.getSelectedEdges().map(
+						function(edge){
+							edge.setColor(color);
+							edge.setWidth(size);
+							edge.setLabel("" + size)
+						}
+					);
+
+			}
+			
+			function createEdges(){
+				var color = getSelectedColor();
+				var size = spinSize.value;
+				var sourceNode = null;
+				myGraph.getSelectedNodes().map(
+						function(node){
+							if(sourceNode){
+								var id = "E_" + new Date().getTime();
+								myGraph.addEdge(id, id, sourceNode.getId(), node.getId(), true, size, color)		
+							}
+							sourceNode = node;
+						}
+				);
+				myGraph.redraw();
+			}
+			
+			function selectAll(){
+				var arrSel = [];
+				myGraph.getNodes().map(function(node){arrSel.push(node.getId());});
+				myGraph.getEdges().map(
+						function(edge){
+							arrSel.push(edge.getId());
+							edge.setDirected(false);
+							edge.setShape('CIRCLE');
+							edge.setWidth(1);
+						}
+				);				
+				myGraph.selectElements(arrSel);
+				addLogMessage('Unselect after 2 seconds.');
+				/* schedule unselect */				
+				setTimeout(
+					function(){
+						myGraph.getEdges().map(
+								function(edge){
+									edge.setDirected(true);
+									addLogMessage(edge.getShape());
+									edge.setShape('DELTA');
+								}
+						);				
+						myGraph.deselectElements(arrSel);						
+					}
+					, 2000
+				);
+			}
+			
+			
+			function getSelectedColor(){
+				//color from the colorpicker widget
+				return $('.ui-colorpicker_hex > :input').val();
+			}
+
+			function arrIdsToString(arrItems){
+				var strIds = "";
+				arrItems.map(function(item){strIds += item.getId() + ', '});
+				return strIds;
+			}
+
+			function addLogMessage(message){
+				var logConsole = $('#console');
+				logConsole.html(logConsole.html() + '<br/>' + message);
+			}
+			
+			function coloriseItems(arrItems, color){
+				arrItems.map(function(item){item.setColor(color)});
+			}
+
+		</script>
+

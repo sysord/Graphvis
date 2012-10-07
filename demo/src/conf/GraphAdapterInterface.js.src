@@ -1,0 +1,127 @@
+
+/**
+ * 
+ * PrimeFaces Graphvis graph adapter Interface
+ * 
+ */
+GraphAdapter.prototype = { 
+
+
+	applyLayout: function(layoutname) {},
+
+	redraw: function(){},
+	
+	/**
+	 * get node by id
+	 * return node or null
+	 */
+	getNode: function(nodeId) {},
+
+	/**
+	 * get all nodes
+	 * return nodes array
+	 */
+	getNodes: function() {},
+
+	/**
+	 * Add a new node
+	 * return the new node
+	 */
+	addNode: function(nodeId, label, x, y, size, shape, color, datas, redraw) {},
+				
+	/**
+	 * Remove node by id (redraw graph: true or false)
+	 * return the removed node
+	 */
+	removeNode: function(nodeId, redraw) {
+	},
+
+	/**
+	 * get edge by id
+	 * return edge or null
+	 */
+	getEdge: function(nodeId) {},
+
+	/**
+	 * get all edges
+	 * return edges array
+	 */
+	getEdges: function() {},
+
+	/**
+	 * Add edge
+	 * return the new Edge
+	 */
+	addEdge: function(edgeId, label, sourceNodeId, targetNodeId, directed, width, color, datas, redraw) {},
+
+		
+	/**
+	 * Remove edge
+	 * return the removed Edge
+	 */
+	removeEdge: function(edgeId, redraw) {},
+
+							
+	/**
+	 * Return an array containing selected elements 
+	 */
+	getSelectedElements: function() {},
+
+	/**
+	 * Select elements by id 
+	 * return selected elements array
+	 */
+	selectElements: function(arrElementsId) {},
+
+	/**
+	 * Unselect elements by id 
+	 */
+	deselectElements: function(arrElementsId) {
+	},
+
+	
+	/**
+	 * Return an array containing selected Nodes
+	 */
+	getSelectedNodes: function() {
+	},
+
+	/**
+	 * Return an array containing selected Edges
+	 */
+	getSelectedEdges: function() {
+	},
+
+	
+	/**
+	 * Client side event listeners binders
+	 */
+	addItemClickListener: function(listener){},
+	
+	addNodeClickListener: function(listener){},
+	
+	addEdgeClickListener: function(listener){},
+	
+	addItemDblClickListener: function(listener){},
+	
+	addNodeDblClickListener: function(listener){},
+	
+	addEdgeDblClickListener: function(listener){},
+
+	addItemSelectionListener: function(listener){},
+	
+	addNodeSelectionListener: function(listener){},
+
+	addEdgeSelectionListener: function(listener){},
+	
+	addItemDeselectionListener: function(listener){},
+
+	addNodeDeselectionListener: function(listener){},
+
+	addEdgeDeselectionListener: function(listener){},
+
+	addDragDropListener: function(listener){},
+
+};
+
+

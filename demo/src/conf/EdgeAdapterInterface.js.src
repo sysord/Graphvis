@@ -1,0 +1,35 @@
+
+/**
+ * 
+ * PrimeFaces Graphvis edge adapter Interface
+ * 
+ */
+EdgeAdapter.prototype = { 
+
+	getType: function() {return "EDGE";},
+
+	setId: function(id) {},	
+	getId: function() {},
+
+	setLabel: function(label) {},	
+	getLabel: function() {},
+
+	setWidth: function(width) {},	
+	getWidth: function() {},
+
+	setShape: function(shape) {},	
+	getShape: function() {},
+
+	setColor: function(color) {},	
+	getColor: function() {},
+
+	setDirected: function(directed) {},	//directed: true or false
+	getDirected: function() {},
+
+	getSource: function() {}, // return the source node
+	getTarget: function() {}, // return the target node
+
+	setDatas: function(datas) {},	
+	getDatas: function(){},
+
+};

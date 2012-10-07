@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</h:head>
+	
+	<h:body>
+
+<p:growl id="growl" />
+	
+<h:form id="mainForm">	
+	
+	<br/><br/><br/><br/> 
+
+
+	<p:commandButton id="cmdCSAddNode" value="Client side Add node" 
+		type="button" onclick="testAdd()" />
+
+	<p:commandButton id="cmdAddNode" value="Server side Add node" actionListener="#{graphvisBean.createNewNode()}" oncomplete="myGraph.synchronize()" />
+		
+<!-- 	 
+	<p:commandButton id="cmdCSAddNode" value="Client side Add node" 
+		type="button" onclick="alert(myGraph.addNode('', 'Nouveau noeud', {}).data.id)" />
+
+	<p:commandButton id="cmdCSAddEdge" value="Client side Add edge" 
+		type="button" onclick="myGraph.addEdge('new Edge','02', myGraph.addNode('', 'Nouveau noeud', {}).data.id, {})" />
+
+	<p:commandButton id="cmdCSDeleteSelected" value="Client side delete selected" 
+		type="button" onclick="myGraph.removeElements(myGraph.getSelectedElements())" />
+
+	<br/>
+
+	<p:commandButton id="cmdSSAddNode" value="Server side Add node"  actionListener="#{graphvisBean.createNewNode}" onsuccess="myGraph.synchronize()" />
+ 	 
+ 	<p:commandButton id="cmdCSAddEdge" value="Client side Add edge" 
+		type="button" onclick="myGraph.addEdge('new Edge','02', myGraph.addNode('', 'Nouveau noeud', {}).data.id, {})" />
+ -->
+
+<!-- 
+	<p:commandButton id="cmdSSDeleteSelected" value="Server side delete selected" 
+		type="button" onclick="myGraph.removeElements(myGraph.getSelectedElements())" />
+ -->	
+			<p:graphvis id="testgraphvis" title="titre essai" value="#{graphvisBean.graphModel}" 
+				styleClass="ui-datatable ui-widget" widgetVar="myGraph" update ="mainForm:txtModelDescription"
+
+
+				onNodeClick="var selnode=myGraph.getNode(gvitem.data.id); selnode.setColor('#00ff00'); selnode.setSize(80); selnode.setX(selnode.getX() + 30); selnode.setLabel('RRRR')"		
+				
+				ZAZAonNodeUnselection="var node=myGraph.getNode(gvitem.data.id); node.setColor('#ff0000'); node.setSize(10);"		
+
+			
+				ZonNodeClick="var style = myGraph.vis.visualStyle();		
+							style.global.backgroundColor = '#ff0000';
+							myGraph.vis.visualStyle(style);"
+			
+				ZZonNodeClick="var style = myGraph.vis.visualStyle();
+							gvitem.data.color='#ff0000';
+							myGraph.vis.updateData([gvitem]);
+							"							
+			
+
+			
+				ZZonItemClick="onItemclick_testgraphvis(event, gvitem);"
+				
+				ZonItemClick="alert('click:'+ gvitem.data.id); onItemclick_testgraphvis(event, gvitem);"
+				ZonEdgeClick="onEdgeclick_testgraphvis(event, gvitem);"
+				ZonItemDblclick="onItemdblclick_testgraphvis(event, gvitem);"
+				ZonNodeDblclick="onNodedblclick_testgraphvis(event, gvitem);"
+				ZonEdgeDblclick="onEdgedblclick_testgraphvis(event, gvitem);"
+				
+				ZonItemSelection="alert('select items:'+ gvitems.length);"		
+				ZonNodeSelection="alert('select nodes:' + gvitems.length);"		
+				ZZonNodeSelection="alert('SELECT NODE');"		
+				ZZonEdgeSelection="myGraph.getNode('01').setColor('#00ff00');"		
+				
+		
+				ZonItemUnselection="alert('unselect items:'+ gvitems.length);"		
+				ZonNodeUnselection="alert('unselect nodes:' + gvitems.length);"		
+				ZonEdgeUnselection="alert('unselect edges:'  + gvitems.length);"		
+		
+			>
+
+ 		
+
+
+
+ <!--   				<p:ajax event="select" listener="#{graphvisBean.onSelectItems}" update=":growl" />
+		 		<p:ajax event="unselect" listener="#{graphvisBean.onUnselectItems}" update=":growl" />
+ -->
+ 				
+				 
+				<p:ajax event="nodeSelect" listener="#{graphvisBean.onSelectNodes}" update=":growl" />
+<!-- 
+				<p:ajax event="nodeUnselect" listener="#{graphvisBean.onUnselectNodes}" update="growl" />
+		
+				<p:ajax event="edgeSelect" listener="#{graphvisBean.onSelectEdges}" update="growl" />
+				<p:ajax event="edgeUnselect" listener="#{graphvisBean.onUnselectEdges}" update="growl" />
+ -->			
+			</p:graphvis> 
+
+		 	<p:commandButton id="cmdRefreshDescription" value="Refresh Description"  update="txtModelDescription"/>
+		 	<p:commandButton id="cmdSynchronize" value="Synchronize" type="button" onclick="myGraph.postlayoutSync()"  />
+			<br/>
+			<p:inputTextarea id="txtModelDescription" value ="#{graphvisBean.modelDescription}" rows="20" cols="50" />
+	
+	<script type="text/javascript">
+		function testAdd() {
+			var node = myGraph.addNode('', 'Nouveau noeud', {});
+			node.x = 100;		
+		}	
+	</script>
+	
+ 
+ 
+<!-- <p:commandButton id="cmdAddNode" value="Add node" actionListener="#{graphvisBean.createNode()}" update="testgraphvis" />  -->
+</h:form>
+	</h:body>
+</html>

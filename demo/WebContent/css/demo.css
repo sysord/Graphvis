@@ -1,0 +1,11 @@
+.primefacesAttributes, .primefacesAttributes tr, .primefacesAttributes td, .primefacesAttributes th{
+	border: solid 1px black;
+	padding: 3px;
+}
+
+.primefacesAttributes {
+	border-collapse: collapse
+}
+.primefacesAttributes th{
+	font-weight: bold;
+}

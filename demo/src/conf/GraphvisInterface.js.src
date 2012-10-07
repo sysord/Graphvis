@@ -1,0 +1,143 @@
+
+/**
+ * 
+ * PrimeFaces Graphvis Widget Interface
+ * 
+ */
+PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
+		
+	/**
+	 * redraw graph
+	 */
+	redraw: function(){},
+	
+	/**
+	 * apply layout
+	 * @param layout layout name
+	 */
+	doLayout: function(layout){},
+	
+	/**
+	 * get node by id
+	 * @return node
+	 */
+	getNode: function(nodeId) {},
+
+	/**
+	 * return all nodes
+	 * @return nodes Array
+	 */
+	getNodes: function() {},
+		
+	/**
+	 * Add node
+	 * @return new node
+	 */
+	addNode: function(nodeId, label, x, y, size, shape, color, datas, redraw) {},
+		
+	/**
+	 * Remove node
+	 * @return removed node
+	 */
+	removeNode: function(nodeId, redraw) {
+	},
+	
+	/**
+	 * get edge by id
+	 * @return edge
+	 */
+	getEdge: function(edgeId) {},
+
+	/**
+	 * return all edges
+	 * @return edges array
+	 */
+	getEdges: function() {
+	},
+
+
+	/**
+	 * Add edge
+	 * @return new edge
+	 */
+	addEdge: function(edgeId, label, sourceNodeId, targetNodeId, directed, width, color, datas, redraw) {},
+		
+	/**
+	 * Remove edge
+	 * @return removed edge
+	 */
+	removeEdge: function(edgeId, redraw) {},
+	
+	/**
+	 * Remove elements (nodes or edges)
+	 * @return arrElements
+	 */
+	removeElements: function(arrElements) {
+	},
+	
+	
+	/**
+	 * Selected elements
+	 * @return selected elements array
+	 */
+	getSelectedElements: function() {},
+	
+	/**
+	 * select elements
+	 * @param arrElements
+	 * @return selected elements array
+	 */
+	selectElements: function(arrElements) {
+	},
+	
+	/**
+	 * unselect elements
+	 * @param arrElements
+	 * @return unselected elements array
+	 */
+	deselectElements: function(arrElements) {
+	},
+	
+	/**
+	 * Selected nodes
+	 * @return selected nodes array
+	 */
+	getSelectedNodes: function() {
+	},
+
+	/**
+	 * Selected edges
+	 * @return selected nodes array
+	 */
+	getSelectedEdges: function() {
+	},
+	
+
+	/**
+	 * request graph model from the server and redraw it
+	 */
+	reload: function(){
+	},
+	
+	/**
+	 * Synchronization with server model
+	 * 
+	 * @param: hide:  if true, graph is hidden during synchronization
+	 * @param: all: request synchronization for all elements (full model synchronization)
+	 */
+	synchronize: function(hide, all) {
+	},
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+

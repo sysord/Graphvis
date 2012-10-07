@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE component SYSTEM "../misc/component.dtd" [
+<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY widget_var_attribute					SYSTEM "../entities/widget_var_attribute.xml">
+]>
+<component>
+	<tag>graphvis</tag>
+	<tagClass>org.primefaces.component.graphvis.Graphvis</tagClass>
+	<componentClass>org.primefaces.component.graphvis.Graphvis</componentClass>
+	<componentType>org.primefaces.component.Graphvis</componentType>
+	<componentFamily>org.primefaces.component</componentFamily>
+	<rendererType>org.primefaces.component.GraphvisRenderer</rendererType>
+	<rendererClass>org.primefaces.component.graphvis.GraphvisRenderer</rendererClass>
+	<parent>javax.faces.component.UIPanel</parent>
+    <interfaces>
+		<interface>
+			<name>org.primefaces.component.api.Widget</name>
+		</interface>
+		<interface>
+			<name>javax.faces.component.behavior.ClientBehaviorHolder</name>
+		</interface>
+	</interfaces>
+	<attributes>
+		&standard_uicomponent_attributes;
+		&widget_var_attribute;
+		<attribute>
+			<name>ajax</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+			<defaultValue>true</defaultValue>
+            <description>Specifies the synchronization mode, when set to true (default), all local model change are replicated on the server side.</description>
+		</attribute>
+		<attribute>
+			<name>update</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+            <description>Component(s) to be updated after synchronize.</description>
+		</attribute>		
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<type>org.primefaces.model.graphvis.GraphvisModel</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>EL for accessing graphvizModel.</description>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+		</attribute>
+		
+		<attribute>
+			<name>onItemClick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph element is clicked.</description>
+		</attribute>		
+		<attribute>
+			<name>onItemDblclick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph element is double clicked.</description>
+		</attribute>
+		<attribute>
+			<name>onItemSelection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph element is selected.</description>
+		</attribute>		
+		<attribute>
+			<name>onItemUnselection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph element is unselected.</description>
+		</attribute>
+								
+		<attribute>
+			<name>onNodeClick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph node is clicked.</description>
+		</attribute>		
+		<attribute>
+			<name>onNodeDblclick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph node is double clicked.</description>
+		</attribute>
+		<attribute>
+			<name>onNodeSelection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph node is selected.</description>
+		</attribute>		
+		<attribute>
+			<name>onNodeUnselection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph node is unselected.</description>
+		</attribute>		
+						
+		<attribute>
+			<name>onEdgeClick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph edge is clicked.</description>
+		</attribute>		
+		<attribute>
+			<name>onEdgeDblclick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph edge is double clicked.</description>
+		</attribute>		
+		<attribute>
+			<name>onEdgeSelection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph edge is selected.</description>
+		</attribute>		
+		<attribute>
+			<name>onEdgeUnselection</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<ignoreInComponent>false</ignoreInComponent>
+            <description>Client side callback to execute when a graph edge is unselected.</description>
+		</attribute>		
+
+	</attributes>
+	<resources>
+        <resource>
+			<name>graphvis/graphvis.css</name>
+		</resource>
+		<resource>
+			<name>jquery/jquery.js</name>
+		</resource>s
+		<resource>
+			<name>primefaces.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/json2.min.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/AC_OETags.min.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/cytoscapeweb.min.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/cytoscapeweb_primefaces_adapter.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/cytoscapeweb_GraphvisLib.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/graphvis.js</name>
+		</resource>
+	</resources>
+</component>

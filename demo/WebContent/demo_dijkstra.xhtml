@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shCore.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushJava.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushJScript.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushXml.js"></script>
+		
+		<link type="text/css" rel="stylesheet" href="#{utilBean.baseLink}/css/shCore.css"  />
+		<link type="text/css" rel="stylesheet" href="#{utilBean.baseLink}/css/shThemeDefault.css"  />
+		
+	</h:head>
+	
+	<h:body style="font-size:12px">
+
+		<p:growl id="growl" />
+		
+		<ui:include src="header.xhtml"/>
+			
+		<h:form id="mainForm">	
+			<div style="height:500px;width:100%; border:solid 1px; padding:2px">
+				<p>
+					On "Generate Graph" click, a graph model is randomly generated on the server side and drawn on the client side.<br/>
+					On "Find path" click, server apply the Dijkstra algorithm looking for the shortest path.
+					if a path is found, server apply red color at all path elements, on the client side the graph 
+					is updated and the shortest path is shown.  <a href="http://localhost:8080/Sysord/ressource_graphvis_demo_dijkstra.jsf"> [online demo]</a>   
+				</p>				
+				<p:messages id="messages" showDetail="true"/>
+				<div id="dijGraphContainer" style="height:70%;">
+					<p:graphvis id="dijGraph" title="Graphe Dijkstra" value="#{demoDijBean.graphModel}" 
+						styleClass="ui-datatable ui-widget" widgetVar="graph" >
+					</p:graphvis> 
+			 	</div>
+				<p:commandButton id="cmdGenerate" value="Generate Graph" action="#{demoDijBean.generateGraph()}" onsuccess="graph.synchronize(true);" update=":growl mainForm:messages"/>
+				<p:commandButton id="cmdFindPath" value="Find path" action="#{demoDijBean.applyDijkstra()}" onsuccess="graph.synchronize();" update=":growl mainForm:messages" />
+		 	</div>
+		</h:form>
+		
+		<p:tabView id="sourceTabView">
+
+			<p:tab  title="DemoDijBean.xhtml">
+				<pre class="brush: xml" >
+					<h:outputText value="#{sourceBean.getSource('DemoDijkstra.xhtml.src')}" />				
+				</pre>
+			</p:tab>
+		
+			<p:tab  title="DemoDijBean.java">
+				<pre class="brush: java" >
+					<h:outputText value="#{sourceBean.getSource('DemoDijBean.java.src')}" />				
+				</pre>
+			</p:tab>
+
+			<p:tab  title="GraphModelGenerator.java">
+				<pre class="brush: java" >
+					<h:outputText value="#{sourceBean.getSource('GraphModelGenerator.java.src')}" />				
+				</pre>
+			</p:tab>
+		
+			<p:tab title="AlgoDijkstra.java">
+				<pre class="brush: java" >
+					<h:outputText value="#{sourceBean.getSource('AlgoDijkstra.java.src')}" />				
+				</pre>
+			</p:tab>
+		
+		</p:tabView>
+		
+
+		
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+	
+		
+</h:body>
+</html>

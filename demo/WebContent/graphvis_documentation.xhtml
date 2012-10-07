@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shCore.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushJava.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushJScript.js"></script>
+		<script type="text/javascript" src="#{utilBean.baseLink}/js/shBrushXml.js"></script>
+		
+		<link type="text/css" rel="stylesheet" href="#{utilBean.baseLink}/css/shCore.css"  />
+		<link type="text/css" rel="stylesheet" href="#{utilBean.baseLink}/css/shThemeDefault.css"  />
+		
+	</h:head>
+	
+	<h:body style="font-size:12px">
+		
+		<p:growl id="growl" />
+		
+		<ui:include src="header.xhtml"/>
+			
+		<p:tabView id="sourceTabView" >
+
+			<p:tab title="Graphvis">
+				<a href="http://localhost:8080/Sysord/ressource_graphvis.jsf#composantGraphvis">[online documentation]</a>
+				<p style="font-size:18px">Graphvis Tag: <strong>&lt;p:graphvis /&gt;</strong><br/><br/>
+					<strong>Attributes:</strong>		 
+				</p>						
+			<table class="primefacesAttributes">
+			<tr>
+				<th>Name</th>
+				<th>Required</th>
+				<th>Type</th>
+				<th>Default</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td>ajax</td>
+				<td>false</td>
+				<td>java.lang.Boolean</td>
+				<td>true</td>
+				<td>Specifies the synchronization mode, when set to true
+					(default), all local model change are replicated on the server
+					side.</td>
+			</tr>
+			<tr>
+				<td>update</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Component(s) to be updated after synchronize.</td>
+			</tr>
+			<tr>
+				<td>value</td>
+				<td>false</td>
+				<td>org.primefaces.model.graphvis.GraphvisModel</td>
+				<td>null</td>
+				<td>EL for accessing graphvisModel.</td>
+			</tr>
+			<tr>
+				<td>style</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>style</td>
+			</tr>
+			<tr>
+				<td>styleClass</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>style classes</td>
+			</tr>
+
+			<tr>
+				<td>onItemClick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph element is
+					clicked.</td>
+			</tr>
+			<tr>
+				<td>onItemDblclick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph element is
+					double clicked.</td>
+			</tr>
+			<tr>
+				<td>onItemSelection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph element is
+					selected.</td>
+			</tr>
+			<tr>
+				<td>onItemUnselection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph element is
+					unselected.</td>
+			</tr>
+
+			<tr>
+				<td>onNodeClick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph node is
+					clicked.</td>
+			</tr>
+			<tr>
+				<td>onNodeDblclick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph node is double
+					clicked.</td>
+			</tr>
+			<tr>
+				<td>onNodeSelection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph node is
+					selected.</td>
+			</tr>
+			<tr>
+				<td>onNodeUnselection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph node is
+					unselected.</td>
+			</tr>
+
+			<tr>
+				<td>onEdgeClick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph edge is
+					clicked.</td>
+			</tr>
+			<tr>
+				<td>onEdgeDblclick</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph edge is double
+					clicked.</td>
+			</tr>
+			<tr>
+				<td>onEdgeSelection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph edge is
+					selected.</td>
+			</tr>
+			<tr>
+				<td>onEdgeUnselection</td>
+				<td>false</td>
+				<td>java.lang.String</td>
+				<td>null</td>
+				<td>Client side callback to execute when a graph edge is
+					unselected.</td>
+			</tr>
+
+		</table>
+			
+			</p:tab>
+
+			<p:tab title="Graphvis Interface">
+				<pre class="brush: js">
+					<h:outputText
+						value="#{sourceBean.getSource('GraphvisInterface.js.src')}" />				
+				</pre>
+			</p:tab>
+
+			<p:tab title="Graph Adapter">
+				<pre class="brush: js">
+					<h:outputText
+						value="#{sourceBean.getSource('GraphAdapterInterface.js.src')}" />				
+				</pre>
+			</p:tab>
+
+			<p:tab title="Node Adapter">
+				<pre class="brush: js">
+					<h:outputText
+						value="#{sourceBean.getSource('NodeAdapterInterface.js.src')}" />				
+				</pre>
+			</p:tab>
+
+			<p:tab title="Edge Adapter">
+				<pre class="brush: js">
+					<h:outputText
+						value="#{sourceBean.getSource('EdgeAdapterInterface.js.src')}" />				
+				</pre>
+			</p:tab>
+
+		</p:tabView>
+		
+ 		
+		
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+	
+		
+</h:body>
+</html>

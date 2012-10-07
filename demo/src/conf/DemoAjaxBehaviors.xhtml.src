@@ -1,0 +1,114 @@
+<p:growl id="growl" />
+	
+<h:form id="mainForm">	
+	<div style="height:40%;width:49%; border:solid 1px; padding:2px; float:left">
+		<div id="dijGraphContainer" style="height:90%;">
+			
+			<p:graphvis id="graph"  value="#{demoAjaxBehaviorsBean.graphModel}"  
+				widgetVar="myGraph" ajax="true" update ="mainForm:txtModelDescription">
+								
+				<p:ajax event="select" listener="#{demoAjaxBehaviorsBean.onSelectItems}" update=":growl" />
+ 				<p:ajax event="unselect" listener="#{demoAjaxBehaviorsBean.onUnselectItems}" update=":growl" />
+				<p:ajax event="nodeSelect" listener="#{demoAjaxBehaviorsBean.onSelectNodes}" update=":growl" />
+				<p:ajax event="nodeUnselect" listener="#{demoAjaxBehaviorsBean.onUnselectNodes}" update=":growl" />
+				<p:ajax event="edgeSelect" listener="#{demoAjaxBehaviorsBean.onSelectEdges}" update=":growl" />
+				<p:ajax event="edgeUnselect" listener="#{demoAjaxBehaviorsBean.onUnselectEdges}" update=":growl" />					
+								
+			</p:graphvis>
+										 
+	 	</div>			 	
+ 	</div>
+	<div id="stylePanel" style="margin-left:50%; width:30%;">
+		<p:fieldset >
+			<p:commandButton  value="generate new Graph"  style="width:100%" action="#{demoAjaxBehaviorsBean.fillGraphModel()}" onsuccess="myGraph.synchronize(true)"/>										
+			<p:commandButton type="button" value="Remove selected nodes" onclick="removeSelectedNodes()" style="width:100%"/>										
+			<p:commandButton type="button" value="Create edge between selected nodes" onclick="createEdges()" style="width:100%"/>										
+			<br/><br/><b><h:outputText value="Style:"/></b> 
+			<h:panelGrid columns = "2" style="font-size:10px">
+				<h:outputText value="Layout:"/> 
+				<p:selectOneMenu label="Shape:" widgetVar="layoutSelector" onchange="myGraph.doLayout(layoutSelector.value);" >
+					<f:selectItem itemLabel="ForceDirected" itemValue="ForceDirected" />
+					<f:selectItem itemLabel="Circle" itemValue="Circle" />
+					<f:selectItem itemLabel="Radial" itemValue="Radial" />
+					<f:selectItem itemLabel="Tree" itemValue="Tree" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Shape:"/> 
+				<p:selectOneMenu label="Shape:" widgetVar="shapeSelector" onchange="addLogMessage(shapeSelector.value);" >
+					<f:selectItem itemLabel="ELLIPSE" itemValue="ELLIPSE" />
+					<f:selectItem itemLabel="RECTANGLE" itemValue="RECTANGLE" />
+					<f:selectItem itemLabel="TRIANGLE" itemValue="TRIANGLE" />
+					<f:selectItem itemLabel="DIAMOND" itemValue="DIAMOND" />
+					<f:selectItem itemLabel="HEXAGON" itemValue="HEXAGON" />
+					<f:selectItem itemLabel="OCTAGON" itemValue="OCTAGON" />
+					<f:selectItem itemLabel="PARALLELOGRAM" itemValue="PARALLELOGRAM" />
+				</p:selectOneMenu>
+				<h:outputText value="Color:"/> 
+				<p:colorPicker id="colorPicker" widgetVar="colorPicker" style="vertical-align:top"/>
+				<h:outputText value="Size:"/> 						
+				<p:spinner widgetVar="spinSize" value="10" min="10" max="50" size="2" style="vertical-align:top"/>
+			</h:panelGrid>
+			<p:commandButton type="button" onclick="applyStyleOnSelection()" value="Apply style on selection" style="width:100%"/>
+		</p:fieldset>						 	
+	</div>		 	
+	
+	<p:inputTextarea id="txtModelDescription" value ="#{demoAjaxBehaviorsBean.modelDescription}" style="clear:left;width:100%; height:25%;overflow:auto" />
+</h:form>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
+	});
+
+	function removeSelectedNodes(){
+		myGraph.getSelectedNodes().map(function(node){myGraph.removeNode(node.getId())});
+		myGraph.redraw();
+	}
+
+	function applyStyleOnSelection(){
+		var color = getSelectedColor();
+		var size = spinSize.value;
+		var shape = shapeSelector.value;
+		
+		myGraph.getSelectedNodes().map(
+			function(node){
+				node.setColor(color);
+				node.setSize(size);
+				node.setShape(shape);						
+			}
+		);
+
+		myGraph.getSelectedEdges().map(
+				function(edge){
+					edge.setColor(color);
+					edge.setWidth(size);
+					edge.setLabel("" + size)
+				}
+			);
+
+	}
+	
+	function createEdges(){
+		var color = getSelectedColor();
+		var size = spinSize.value;
+		var sourceNode = null;
+		myGraph.getSelectedNodes().map(
+				function(node){
+					if(sourceNode){
+						var id = "E_" + new Date().getTime();
+						myGraph.addEdge(id, id, sourceNode.getId(), node.getId(), true, size, color)		
+					}
+					sourceNode = node;
+				}
+		);
+		myGraph.redraw();
+	}
+	
+	function getSelectedColor(){
+		//color from the colorpicker widget
+		return $('.ui-colorpicker_hex > :input').val();
+	}
+
+
+</script>

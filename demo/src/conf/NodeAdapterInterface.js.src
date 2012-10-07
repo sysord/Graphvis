@@ -1,0 +1,35 @@
+
+/**
+ * 
+ * PrimeFaces Graphvis node adapter Interface
+ * 
+ */
+NodeAdapter.prototype = { 
+
+	getType: function() {return "NODE";},
+
+	setId: function(id) {},	
+	getId: function() {},
+
+	setLabel: function(label) {},	
+	getLabel: function() {},
+
+	setX: function(x) {},	
+	getX: function() {},
+
+	setY: function(y) {},	
+	getY: function() {},
+
+	setColor: function(color) {}, //color string ('ff0000')	
+	getColor: function() {},
+
+	setSize: function(size) {},	
+	getSize: function() {},
+
+	setShape: function(shapeName) {},	
+	getShape: function() {},
+
+	setDatas: function(datas) {},	
+	getDatas: function(){},
+	
+};
