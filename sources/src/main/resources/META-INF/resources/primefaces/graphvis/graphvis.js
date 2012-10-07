@@ -1,9 +1,6 @@
 
 /**
  * PrimeFaces Graphvis Widget
- * 
- * http://www.sysord.com
- * 
  */
 PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	
@@ -203,7 +200,8 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	reload: function(){
 		$(this.jqId).css('visibility', 'hidden');
-		//remove all nodes
+		//remove all nodes and edges
+		this.removeElements(this.graphAdapter.getEdges());
 		this.removeElements(this.graphAdapter.getNodes());
 		//flush syncStruct: don't apply change to server
 		 this.syncStruct = [];
@@ -301,7 +299,8 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	        	this._removeNode(action.targetId, false);        	
 	        }else if(actionType == 'ADD_EDGE'){
 		        var target = action.target;
-	        	this._addEdge(target.id, target.label, target.sourceNodeId, target.targetNodeId, target.directed, target.width, target.color, target.datas, false);
+		        var newEdge = this._addEdge(target.id, target.label, target.sourceNodeId, target.targetNodeId, target.directed, target.width, target.color, target.datas, false);
+		        newEdge.setShape(target.shape);
 	        }else if(actionType == 'UPDATE_EDGE'){
 		        var targetEdge = this.graphAdapter.getEdge(action.target.id);
 		        if(targetEdge){
@@ -310,6 +309,7 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 		        	targetEdge.setDirected(target.directed);
 		        	targetEdge.setWidth(target.width);
 		        	targetEdge.setColor(target.color);
+		        	targetEdge.setShape(target.shape);
 		        	targetEdge.setDatas(target.datas);		        	
 		        }
 	        
@@ -333,6 +333,8 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 * Setup listeners on Cytoscape notification
 	 */
 	onVisReady: function() {
+		var _self = this;
+		this.graphAdapter.addItemChangeListener(function(item){_self.onItemChange(item)});
 		this.bindClientSideListeners();
 		if(this.cfg.behaviors)this.bindAjaxBeahviorsListeners();
 		this.bindSynchronizationListeners();
@@ -342,13 +344,33 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 * Layout listener
 	 */
 	onLayoutApplied: function() {
-		this.synchronizeAll();
+		this._createSynchronizeAllStruct();
+		if(this.syncStruct.length == 0 ) return;
+		//synchronize if ajax enabled or first layout
+		if(this.cfg.ajax || this.isInitialLayout){
+			this.synchronize();
+			this.isInitialLayout = false;
+		}
+
+	},
+	
+	onItemChange: function(item){
+		if(item.getType() == "NODE"){
+			this.syncStruct.push({actionType:"UPDATE_NODE", target: this._toGenericNode(item)});							
+		}else if(item.getType() == "EDGE"){
+			this.syncStruct.push({actionType:"UPDATE_EDGE", target: this._toGenericEdge(item)});							
+		}
 	},
 	
 	/**
 	 * send all node update to server 
 	 */
 	synchronizeAll: function() {
+		this._createSynchronizeAllStruct();
+		this.synchronize();		
+	},
+
+	_createSynchronizeAllStruct: function() {
 		var nodes = this.graphAdapter.getNodes();
 		if(nodes.length == 0) return;
 		this.syncStruct = [];		
@@ -356,14 +378,14 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 			var node = nodes[i];
 			this.syncStruct.push({actionType:"UPDATE_NODE", target: this._toGenericNode(node)});
 		}
-		
-		//synchronize if ajax enabled or first layout
-		if(this.cfg.ajax || this.isInitialLayout){
-			this.synchronize();
-			this.isInitialLayout = false;
-		}
-	},
 
+		var edges = this.graphAdapter.getEdges();
+		for (var i = 0; i < edges.length; i++) {
+			var edge = edges[i];
+			this.syncStruct.push({actionType:"UPDATE_EDGE", target: this._toGenericEdge(edge)});
+		}
+		
+	},
 	
 	/**
 	 * Binds the client side event listeners for automatic synchronization
@@ -575,7 +597,7 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	_toGenericEdge: function(edge){
 		return {id:edge.getId(), label:edge.getLabel(), sourceNodeId:edge.getSource().getId(), targetNodeId:edge.getTarget().getId(), 
-				directed:edge.getDirected(),  width: edge.getWidth() , color:edge.getColor(), datas:edge.getDatas()};
+				directed:edge.getDirected(),  width: edge.getWidth() , color:edge.getColor(), shape:edge.getShape(), datas:edge.getDatas()};
 	},
 
 	

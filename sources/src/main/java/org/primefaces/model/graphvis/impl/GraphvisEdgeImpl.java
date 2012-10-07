@@ -4,12 +4,6 @@ import org.primefaces.model.graphvis.GraphvisEdge;
 import org.primefaces.model.graphvis.GraphvisModelElement;
 import org.primefaces.model.graphvis.GraphvisNode;
 
-/**
- * 
- * Edge
- * 
- * http://www.sysord.com
- */
 public class GraphvisEdgeImpl extends GraphvisModelElementImpl implements GraphvisEdge {
 
 	/**
@@ -21,7 +15,7 @@ public class GraphvisEdgeImpl extends GraphvisModelElementImpl implements Graphv
 	protected GraphvisNode targetNode;
 	protected Boolean directed = false;
 	protected Integer width = 1;
-	protected ARROW_SHAPE shape;
+	protected ARROW_SHAPE shape = ARROW_SHAPE.ARROW;
 	
 
 	@Override

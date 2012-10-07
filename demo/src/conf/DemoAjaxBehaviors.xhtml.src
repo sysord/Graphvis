@@ -59,6 +59,7 @@
 
 	$(document).ready(function() {
 		$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
+		shapeSelector.value = "ELLIPSE";
 	});
 
 	function removeSelectedNodes(){

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Sysord 2012 - http://www.sysord.com
+ * Sysord 2012
  * 
  */
 package org.primefaces.component.graphvis;
@@ -238,8 +238,8 @@ public class GraphvisRenderer extends CoreRenderer {
 		for(GraphvisEdge edge : model.getEdges()){
 			writer.write("{ id: \"" + edge.getId() + "\", label: \"" + edge.getLabel() + "\", " +
 							"targetNodeId: \"" + edge.getTargetNode().getId() + "\", sourceNodeId: \"" + edge.getSourceNode().getId()  + "\", " +
-							"directed:" + edge.getDirected() +", width: " + edge.getWidth() + ", color: \"" + edge.getColor() + "\", " +
-							"datas: {}" +							
+							"directed:" + edge.getDirected() +", width: " + edge.getWidth() + ", color: \"" + edge.getColor() + "\", " +							
+							" datas: {" +  "shape: \"" + edge.getShape().toString() + "\"" + "}" +							
 						  "},");			
 		}
 		writer.write("],");
@@ -338,6 +338,10 @@ public class GraphvisRenderer extends CoreRenderer {
     				graphvisComp.getValue().addEdge(jsonEdge.getString("id"), jsonEdge.getString("label"), jsonEdge.getString("sourceNodeId"), jsonEdge.getString("targetNodeId"));
     				//update edge
     				synchronizeEdgeFromJson(action.getJSONObject("target"), graphvisComp);
+
+    			}else if(GVMODEL_ACTION_TYPE.UPDATE_EDGE.toString().equals(actionType)){
+    				//update EDGE
+    				synchronizeEdgeFromJson(action.getJSONObject("target"), graphvisComp);
     			}
         	}
 
@@ -429,22 +433,20 @@ public class GraphvisRenderer extends CoreRenderer {
 			}else if(GVMODEL_ACTION_TYPE.ADD_NODE.toString().equals(actionType)
 					 || GVMODEL_ACTION_TYPE.UPDATE_NODE.toString().equals(actionType)){
 				GraphvisModelElement addedElement = graphvisComp.getValue().getGraphvisModelElement(action.getTargetElementId());
-				if(addedElement == null || addedElement.getElementType() != GRAPHVIS_ELEMENT_TYPE.NODE){
-					continue;
+				if(addedElement != null && addedElement.getElementType() == GRAPHVIS_ELEMENT_TYPE.NODE){
+					GraphvisNode addedNode = (GraphvisNode) addedElement;
+					JSONObject jsonTargetNode = nodeToJSON(addedNode);
+		   			jsonSyncAction.put("target", jsonTargetNode);					
 				}
-				GraphvisNode addedNode = (GraphvisNode) addedElement;
-				JSONObject jsonTargetNode = nodeToJSON(addedNode);
-	   			jsonSyncAction.put("target", jsonTargetNode);					
 								
 			}else if(GVMODEL_ACTION_TYPE.ADD_EDGE.toString().equals(actionType)
 				|| GVMODEL_ACTION_TYPE.UPDATE_EDGE.toString().equals(actionType) ){        			
 				GraphvisModelElement addedElement = graphvisComp.getValue().getGraphvisModelElement(action.getTargetElementId());
-				if(addedElement == null || addedElement.getElementType() != GRAPHVIS_ELEMENT_TYPE.EDGE){
-					continue;
+				if(addedElement != null && addedElement.getElementType() == GRAPHVIS_ELEMENT_TYPE.EDGE){
+					GraphvisEdge addedEdge = (GraphvisEdge) addedElement;
+					JSONObject jsonTargetEdge = edgeToJSON(addedEdge);
+					jsonSyncAction.put("target", jsonTargetEdge);					
 				}
-				GraphvisEdge addedEdge = (GraphvisEdge) addedElement;
-				JSONObject jsonTargetEdge = edgeToJSON(addedEdge);
-				jsonSyncAction.put("target", jsonTargetEdge);					
 
 			}else if(GVMODEL_ACTION_TYPE.DO_LAYOUT.toString().equals(actionType)){        			
 				jsonSyncAction.put("targetId", action.getTargetElementId());

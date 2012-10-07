@@ -2,10 +2,8 @@ package org.primefaces.model.graphvis;
 
 /**
  * 
- * 	Graph edge  
+ * Graph edge  
  *
- * 	http://www.sysord.com
- * 
  */
 public interface GraphvisEdge extends GraphvisModelElement{
 

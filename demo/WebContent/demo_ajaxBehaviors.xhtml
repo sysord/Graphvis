@@ -28,7 +28,7 @@
 					Due to the ajax=true attribute, every graph change on the client side is sent to the server.<br/>
 					Ajax behaviors has been set and Ajax request are fired on selection or unselection events.<br/>
 					After every Ajax Request the textArea at the bottom of the graph is updated with a dump of 
-					the server side model. <a href="http://localhost:8080/Sysord/ressource_graphvis_demo_ajaxBehaviors.jsf"> [online demo]</a>			
+					the server side model. <a href="http://www.sysord.com/Sysord/ressource_graphvis_demo_ajaxBehaviors.jsf"> [online demo]</a>			
 				</p>
 				<div id="dijGraphContainer" style="height:75%;">
 					
@@ -87,6 +87,7 @@
 		
 			$(document).ready(function() {
 				$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
+				shapeSelector.value = "ELLIPSE";
 			});
 
 			function removeSelectedNodes(){

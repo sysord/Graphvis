@@ -4,9 +4,7 @@ import java.util.List;
 
 /**
  * 
- * 	Graph node interface
- * 
- *   http://www.sysord.com
+ * Graph node interface  
  * 
  */
 public interface GraphvisNode extends GraphvisModelElement{

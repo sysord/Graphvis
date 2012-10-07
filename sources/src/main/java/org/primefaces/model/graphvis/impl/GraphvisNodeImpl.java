@@ -7,12 +7,6 @@ import org.primefaces.model.graphvis.GraphvisEdge;
 import org.primefaces.model.graphvis.GraphvisModelElement;
 import org.primefaces.model.graphvis.GraphvisNode;
 
-/**
- * 	Node
- * 
- *  http://www.sysord.com
- *
- */
 public class GraphvisNodeImpl extends GraphvisModelElementImpl implements GraphvisNode {
 
 	/**

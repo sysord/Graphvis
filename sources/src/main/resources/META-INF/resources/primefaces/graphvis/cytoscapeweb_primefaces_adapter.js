@@ -1,8 +1,5 @@
-/**
- * CytoscapeWeb Adapter 
- * 
- * http://www.sysord.com
- * 
+/*
+ * Cytoscape Graph Class
  */
 PrimeFaces.widget.CswGraphAdapter = function(divId, graphModel, visualStyle, onVisReadyListener, afterLayoutListener, cytoscapeWebPath, flashInstallerPath) {
 
@@ -401,6 +398,17 @@ PrimeFaces.widget.CswGraphAdapter.prototype = {
 		);
 	},
 
+	addItemChangeListener: function(listener){
+		this.itemChangeListener = listener;
+	},
+	
+	_updateItem: function(adaptedItem, cswItem){
+		this.vis.updateData([cswItem]);
+		if(this.itemChangeListener){
+			this.itemChangeListener(adaptedItem);
+		}
+	},
+	
 	_adapt_CswItems : function(arrCswItems){
 		arrAdaptedItems = [];
 		for(i=0; i < arrCswItems.length; i++){
@@ -509,7 +517,7 @@ PrimeFaces.widget.CswNodeAdapter.prototype = {
 	},
 	
 	update: function() {
-		this.cwsGraphAdapter.vis.updateData([this.cwsNode]);
+		this.cwsGraphAdapter._updateItem(this, this.cwsNode);
 	},
 
 };
@@ -600,7 +608,9 @@ PrimeFaces.widget.CswEdgeAdapter.prototype = {
 
 	
 	update: function() {
-		this.cwsGraphAdapter.vis.updateData([this.cwsEdge]);
+		//this.cwsGraphAdapter.vis.updateData([this.cwsEdge]);
+		this.cwsGraphAdapter._updateItem(this, this.cwsEdge);
+
 	},
 
 };

@@ -15,8 +15,6 @@ import javax.servlet.http.HttpUtils;
 /**
  * Filter for redirect request made by Cytoscape for get swf components
  *
- * http://www.sysord.com
- * 
  */
 public class GraphvisFilter implements Filter{
 

@@ -2,11 +2,6 @@ package org.primefaces.model.graphvis.impl;
 
 import org.primefaces.model.graphvis.GraphvisModelElement;
 
-/**
- * Model element base class
- *
- * http://www.sysord.com
- */
 public abstract class GraphvisModelElementImpl implements GraphvisModelElement {
 
 	private static final long serialVersionUID = 1L;

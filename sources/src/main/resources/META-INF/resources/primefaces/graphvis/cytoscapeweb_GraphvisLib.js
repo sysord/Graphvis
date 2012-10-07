@@ -1,9 +1,7 @@
 
 
 /**
- * Utility functions for CystoscapeWeb graph manipulation
- * 
- *  http://www.sysord.com
+ * Utility function for CystoscapeWeb graph manipulation 
  */
 
 //-------------------------------------------------

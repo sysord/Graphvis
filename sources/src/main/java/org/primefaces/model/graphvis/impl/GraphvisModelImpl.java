@@ -13,12 +13,6 @@ import org.primefaces.model.graphvis.GraphvisModelElement.GRAPHVIS_ELEMENT_TYPE;
 import org.primefaces.model.graphvis.GraphvisNode;
 import org.primefaces.model.graphvis.GraphvisNode.NODE_SHAPE;
 
-/**
- * 	Graphvis Model
- * 
- *  http://www.sysord.com
- *
- */
 public class GraphvisModelImpl implements GraphvisModel {
 
 	/**
