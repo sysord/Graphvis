@@ -1,7 +1,7 @@
 Graphvis
 ========
 
-Graphvis is a Primefaces component for Graph visualisation with [CytoscapeWeb](http://cytoscapeweb.cytoscape.org/).
+Graphvis is a Primefaces JSF component for Graph visualisation with [CytoscapeWeb](http://cytoscapeweb.cytoscape.org/).
 
 ## How to include Graphvis to Primefaces
 
