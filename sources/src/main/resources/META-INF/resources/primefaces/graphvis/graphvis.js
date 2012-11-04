@@ -24,7 +24,7 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	    	this.cfg.flashInstallerPath = "graphlib/playerProductInstall";
 	    }
 	    
-	    this.isInitialLayout = true;
+	    this.synchronizeAfterLayout = true;
 	    var _self = this;
 	    this.graphAdapter = new PrimeFaces.widget.CswGraphAdapter(this.cfg.id, cfg.graphModel, null,
 	    						function(){_self.onVisReady();},
@@ -38,11 +38,12 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 		this.graphAdapter.redraw();
 	},
 	
-	doLayout: function(layout){
-		this.graphAdapter.applyLayout(layout);
-		if(this.cfg.ajax){
-			this.synchronize();
+	doLayout: function(layout, synchronizeAfterLayout){
+		//force synchronization after Layout even if ajax property is set to false
+		if(synchronizeAfterLayout == true){
+			this.synchronizeAfterLayout = true;
 		}
+		this.graphAdapter.applyLayout(layout);
 	},
 	
 	/**
@@ -347,9 +348,9 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 		this._createSynchronizeAllStruct();
 		if(this.syncStruct.length == 0 ) return;
 		//synchronize if ajax enabled or first layout
-		if(this.cfg.ajax || this.isInitialLayout){
+		if(this.cfg.ajax || this.synchronizeAfterLayout){
 			this.synchronize();
-			this.isInitialLayout = false;
+			this.synchronizeAfterLayout = false;
 		}
 
 	},
