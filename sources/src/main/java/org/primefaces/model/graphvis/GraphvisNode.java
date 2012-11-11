@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * 
  * Graph node interface  
- * 
+ *
+ * http://www.sysord.com
  */
 public interface GraphvisNode extends GraphvisModelElement{
 	
@@ -22,6 +23,7 @@ public interface GraphvisNode extends GraphvisModelElement{
 		HEXAGON,
 		OCTAGON,
 		PARALLELOGRAM,		
+		ROUNDRECTANGLE,
 	}
 	
 	/**

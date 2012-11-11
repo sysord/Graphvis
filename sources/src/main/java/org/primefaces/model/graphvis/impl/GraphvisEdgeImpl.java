@@ -4,6 +4,11 @@ import org.primefaces.model.graphvis.GraphvisEdge;
 import org.primefaces.model.graphvis.GraphvisModelElement;
 import org.primefaces.model.graphvis.GraphvisNode;
 
+/**
+ * Graphvis edge default implementation
+ * 
+ * http://www.sysord.com
+ */
 public class GraphvisEdgeImpl extends GraphvisModelElementImpl implements GraphvisEdge {
 
 	/**

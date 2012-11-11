@@ -1,9 +1,11 @@
 Graphvis
 ========
 
-Graphvis is a Primefaces JSF component for Graph visualisation with [CytoscapeWeb](http://cytoscapeweb.cytoscape.org/).
-
-## How to include Graphvis to Primefaces
+Graphvis and Graphvis2 are Primefaces JSF component for Graph visualisation.
+Graphvis use [CytoscapeWeb](http://cytoscapeweb.cytoscape.org/) for graph rendering.
+Graphvis2 use [CytoscapeWeb 2 (CytoscapeWeb.js)](http://cytoscapeweb.cytoscape.org/) for graph rendering.
+ 
+## How to include Graphvis components into Primefaces
 
 * 1. Checkout last Primefaces version
 * 2. Merge sources/src content with primefaces/src (copy sources/src folder into primefaces/src) 
@@ -21,8 +23,15 @@ Online documentation can be found at http://www.sysord.com/Sysord/ressource_grap
 
 The demo application contains sources and a war created by Eclipse for Glassfish. 
 
-Online demos:
+
+Graphvis Online demos:	
   - [Client side events and actions](http://www.sysord.com/Sysord/ressource_graphvis_demo_clientSideEvents.jsf)   
   - [Graphvis Ajax demo](http://www.sysord.com/Sysord/ressource_graphvis_demo_ajaxBehaviors.jsf)
   - [Dijkstra on the server side](http://www.sysord.com/Sysord/ressource_graphvis_demo_dijkstra.jsf)
+
+Graphvis2 Online demos:  
+  - [Client side events and actions](http://www.sysord.com/Sysord/ressource_graphvis2_demo_clientSideEvents.jsf)   
+  - [Graphvis Ajax demo](http://www.sysord.com/Sysord/ressource_graphvis2_demo_ajaxBehaviors.jsf)
+  - [Dijkstra on the server side](http://www.sysord.com/Sysord/ressource_graphvis2_demo_dijkstra.jsf)
+ 
 

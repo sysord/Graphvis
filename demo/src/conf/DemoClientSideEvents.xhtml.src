@@ -29,7 +29,7 @@
 				<p:fieldset >
 					<p:commandButton onclick="myGraph.synchronizeAfterLayout = true;" value="generate new Graph"  style="width:100%" action="#{demoCSEventsBean.fillGraphModel()}" onsuccess="myGraph.synchronize(true)"/>										
 					<p:commandButton  type="button" value="reload graph from server"  style="width:100%" onclick="myGraph.reload()" />										
-					<p:commandButton  type="button" value="send graph to server"  style="width:100%" onclick="myGraph.synchronize()" />										
+					<p:commandButton  type="button" value="send graph to server"  style="width:100%" onclick="myGraph.synchronizeAll()" />										
 					<p:commandButton type="button" value="Remove selected nodes" onclick="removeSelectedNodes()" style="width:100%"/>										
 					<p:commandButton type="button" value="Create edge between selected nodes" onclick="createEdges()" style="width:100%"/>										
 					<p:commandButton type="button" value="Select all graph elements" onclick="selectAll()" style="width:100%"/>															
@@ -69,7 +69,6 @@
 		
 			$(document).ready(function() {
 				$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
-				shapeSelector.value = "ELLIPSE";
 			});
 
 			function removeSelectedNodes(){

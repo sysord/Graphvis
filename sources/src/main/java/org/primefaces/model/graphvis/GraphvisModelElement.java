@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * 	Graph model element interface
+ * 
+ * http://www.sysord.com
  */
 public interface GraphvisModelElement extends Serializable{
 

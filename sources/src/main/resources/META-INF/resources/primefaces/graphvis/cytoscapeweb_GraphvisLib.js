@@ -1,7 +1,9 @@
 
 
 /**
- * Utility function for CystoscapeWeb graph manipulation 
+ * Utility function for CystoscapeWeb graph manipulation
+ * 
+ * http://www.sysord.com  
  */
 
 //-------------------------------------------------
@@ -71,7 +73,7 @@ function gv_prepareNodeElement(nodeId, label, size, shape, color, datas) {
 	}
 	
 	if(size) elementDatas.size = size;
-	if(shape) elementDatas.shape = shape;
+	if(shape) elementDatas.shape = gv_convertNodeShape(shape);
 	if(color) elementDatas.color = color;	
 	elementDatas.id = nodeId;
 	elementDatas.label = label;
@@ -255,7 +257,6 @@ function gv_AddOnDeselectEdgeListener(gv, listener){
 }
 
 
-
 // Return a coma separated string containing items id.
 function gv_ArrItemToIds(arrItems){
 	var csIds = "";
@@ -264,4 +265,53 @@ function gv_ArrItemToIds(arrItems){
 	}
 	return csIds.substring(0, csIds.length - 1);
 }
+
+//------------------------------------------------
+// Shape converter
+// convert shape generic name to cytoscape shape
+//------------------------------------------------
+
+var CYTOSCAPE_NODE_SHAPES = {
+		ELLIPSE: 'ELLIPSE',
+		RECTANGLE: 'RECTANGLE',
+		TRIANGLE: 'TRIANGLE',
+		DIAMOND: 'DIAMOND',
+		HEXAGON: 'HEXAGON',
+		OCTAGON: 'OCTAGON',
+		PARALLELOGRAM: 'PARALLELOGRAM',		
+		ROUNDRECTANGLE:	'RECTANGLE'
+}
+
+var CYTOSCAPE_EDGE_SHAPES = {
+		NONE: 			'NONE',
+		DELTA: 			'DELTA',
+		ARROW: 			'ARROW',
+		DIAMOND: 		'DIAMOND',
+		CIRCLE: 		'CIRCLE',
+		OCTAGON:		'OCTAGON',
+		PARALLELOGRAM:	'PARALLELOGRAM',
+		TEE:			'DELTA',
+		TRIANGLE:		'DELTA',
+		SQUARE:			'PARALLELOGRAM'
+}
+
+
+function gv_convertNodeShape(genericShapeName){
+	var shapeName = CYTOSCAPE_NODE_SHAPES[genericShapeName];
+	if(shapeName == null){
+		shapeName = "ELLIPSE";
+	}
+	return shapeName;
+}
+
+
+
+function gv_convertEdgeShape(genericShapeName){
+	var shapeName = CYTOSCAPE_EDGE_SHAPES[genericShapeName];
+	if(shapeName == null){
+		shapeName = "DELTA";
+	}
+	return shapeName;
+}
+
 

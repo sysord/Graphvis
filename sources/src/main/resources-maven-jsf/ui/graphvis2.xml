@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE component SYSTEM "../misc/component.dtd" [
+<!ENTITY standard_uicomponent_attributes		SYSTEM "../entities/standard_uicomponent_attributes.xml">
+<!ENTITY widget_var_attribute					SYSTEM "../entities/widget_var_attribute.xml">
+]>
+<component>
+	<tag>graphvis2</tag>
+	<tagClass>org.primefaces.component.graphvis.Graphvis2</tagClass>
+	<componentClass>org.primefaces.component.graphvis.Graphvis2</componentClass>
+	<componentType>org.primefaces.component.Graphvis2</componentType>
+	<componentFamily>org.primefaces.component</componentFamily>
+	<rendererType>org.primefaces.component.Graphvis2Renderer</rendererType>
+	<rendererClass>org.primefaces.component.graphvis.Graphvis2Renderer</rendererClass>
+	<parent>org.primefaces.component.graphvis.Graphvis</parent>
+    <interfaces>
+	</interfaces>
+	<attributes>
+	</attributes>
+	<resources>
+        <resource>
+			<name>graphvis2/graphvis2.css</name>
+		</resource>
+		<resource>
+			<name>jquery/jquery.js</name>
+		</resource>s
+		<resource>
+			<name>primefaces.js</name>
+		</resource>
+		<resource>
+			<name>graphvis2/cytoscapePP.js</name>
+		</resource>
+		<resource>
+			<name>graphvis2/arbor.js</name>
+		</resource>
+		<resource>
+			<name>graphvis2/cytoscapeweb2_GraphvisLib.js</name>
+		</resource>
+		<resource>
+			<name>graphvis2/cytoscapeweb2_primefaces_adapter.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/graphvis.js</name>
+		</resource>
+		<resource>
+			<name>graphvis/graphAdapterFactory.js</name>
+		</resource>
+	</resources>
+</component>

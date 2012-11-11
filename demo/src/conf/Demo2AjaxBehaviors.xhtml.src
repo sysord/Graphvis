@@ -1,11 +1,18 @@
 <p:growl id="growl" />
 	
 <h:form id="mainForm">	
-	<div style="height:40%;width:49%; border:solid 1px; padding:2px; float:left">
-		<div id="dijGraphContainer" style="height:90%;">
+	<div style="height:400px;width:49%; border:solid 1px; padding:2px; float:left">
+		<p>
+			Due to the ajax=true attribute, every graph change on the client side is sent to the server.<br/>
+			Ajax behaviors has been set and Ajax request are fired on selection or unselection events.<br/>
+			After every Ajax Request the textArea at the bottom of the graph is updated with a dump of 
+			the server side model. <a href="http://localhost:8080/Sysord/ressource_graphvis_demo_ajaxBehaviors.jsf"> [online demo]</a>			
+		</p>
+		<div id="dijGraphContainer" style="height:75%;">
 			
-			<p:graphvis id="graph"  value="#{demoAjaxBehaviorsBean.graphModel}"  
-				widgetVar="myGraph" ajax="true" update ="mainForm:txtModelDescription">
+			<p:graphvis2 id="graph"  value="#{demoAjaxBehaviorsBean.graphModel}"  
+				widgetVar="myGraph" ajax="true" update ="mainForm:txtModelDescription" 
+				style="border: 1px solid #ddd;margin: Opx 0;">
 								
 				<p:ajax event="select" listener="#{demoAjaxBehaviorsBean.onSelectItems}" update=":growl" />
  				<p:ajax event="unselect" listener="#{demoAjaxBehaviorsBean.onUnselectItems}" update=":growl" />
@@ -14,7 +21,7 @@
 				<p:ajax event="edgeSelect" listener="#{demoAjaxBehaviorsBean.onSelectEdges}" update=":growl" />
 				<p:ajax event="edgeUnselect" listener="#{demoAjaxBehaviorsBean.onUnselectEdges}" update=":growl" />					
 								
-			</p:graphvis>
+			</p:graphvis2>
 										 
 	 	</div>			 	
  	</div>
@@ -26,22 +33,17 @@
 			<br/><br/><b><h:outputText value="Style:"/></b> 
 			<h:panelGrid columns = "2" style="font-size:10px">
 				<h:outputText value="Layout:"/> 
-				<p:selectOneMenu label="Shape:" widgetVar="layoutSelector" onchange="myGraph.doLayout(layoutSelector.value);" >
-					<f:selectItem itemLabel="ForceDirected" itemValue="ForceDirected" />
-					<f:selectItem itemLabel="Circle" itemValue="Circle" />
-					<f:selectItem itemLabel="Radial" itemValue="Radial" />
-					<f:selectItem itemLabel="Tree" itemValue="Tree" />
+				<p:selectOneMenu  widgetVar="layoutSelector" onchange="myGraph.doLayout(this.value);" >
+					<f:selectItem itemLabel="Random" itemValue="randomLayout" />
+					<f:selectItem itemLabel="Arbor" itemValue="arborLayout" />
+					<f:selectItem itemLabel="Grid" itemValue="gridLayout" />
 				</p:selectOneMenu>
 
 				<h:outputText value="Shape:"/> 
-				<p:selectOneMenu label="Shape:" widgetVar="shapeSelector" onchange="addLogMessage(shapeSelector.value);" >
+				<p:selectOneMenu  widgetVar="shapeSelector">
 					<f:selectItem itemLabel="ELLIPSE" itemValue="ELLIPSE" />
 					<f:selectItem itemLabel="RECTANGLE" itemValue="RECTANGLE" />
 					<f:selectItem itemLabel="TRIANGLE" itemValue="TRIANGLE" />
-					<f:selectItem itemLabel="DIAMOND" itemValue="DIAMOND" />
-					<f:selectItem itemLabel="HEXAGON" itemValue="HEXAGON" />
-					<f:selectItem itemLabel="OCTAGON" itemValue="OCTAGON" />
-					<f:selectItem itemLabel="PARALLELOGRAM" itemValue="PARALLELOGRAM" />
 				</p:selectOneMenu>
 				<h:outputText value="Color:"/> 
 				<p:colorPicker id="colorPicker" widgetVar="colorPicker" style="vertical-align:top"/>
@@ -52,13 +54,14 @@
 		</p:fieldset>						 	
 	</div>		 	
 	
-	<p:inputTextarea id="txtModelDescription" value ="#{demoAjaxBehaviorsBean.modelDescription}" style="clear:left;width:100%; height:25%;overflow:auto" />
+	<p:inputTextarea id="txtModelDescription" value ="#{demoAjaxBehaviorsBean.modelDescription}" style="clear:left;width:100%; height:20%;overflow:auto;font-size:10px;"  />
 </h:form>
 
 <script type="text/javascript">
 
 	$(document).ready(function() {
 		$(colorPicker.jqId + '_livePreview').css('background-color', getSelectedColor());
+		shapeSelector.value = "ELLIPSE";
 	});
 
 	function removeSelectedNodes(){
@@ -107,8 +110,13 @@
 	
 	function getSelectedColor(){
 		//color from the colorpicker widget
-		return $('.ui-colorpicker_hex > :input').val();
+		return '#' + $('.ui-colorpicker_hex > :input').val();
 	}
 
+	function arrIdsToString(arrItems){
+		var strIds = "";
+		arrItems.map(function(item){strIds += item.getId() + ', '});
+		return strIds;
+	}
 
 </script>

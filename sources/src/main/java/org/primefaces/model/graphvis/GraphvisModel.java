@@ -6,7 +6,9 @@ import java.util.List;
 import org.primefaces.model.graphvis.GraphvisNode.NODE_SHAPE;
 
 /**
- * Graph model 
+ * Graph model
+ * 
+ * http://www.sysord.com  
  */
 public interface GraphvisModel extends Serializable{
 

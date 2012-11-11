@@ -1,6 +1,8 @@
 
 /**
  * PrimeFaces Graphvis Widget
+ * 
+ * http://www.sysord.com 
  */
 PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	
@@ -16,21 +18,23 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	    
 	    //--------------------------------------------------------
 	    // create visualisation and draw model    
-	    //--------------------------------------------------------
-	    if(!this.cfg.cytoscapeWebPath){
-	    	this.cfg.cytoscapeWebPath = "graphlib/CytoscapeWeb";
-	    }
-	    if(!this.cfg.flashInstallerPath){
-	    	this.cfg.flashInstallerPath = "graphlib/playerProductInstall";
-	    }
-	    
+	    //--------------------------------------------------------	    
 	    this.synchronizeAfterLayout = true;
 	    var _self = this;
-	    this.graphAdapter = new PrimeFaces.widget.CswGraphAdapter(this.cfg.id, cfg.graphModel, null,
-	    						function(){_self.onVisReady();},
-	    						function(){_self.onLayoutApplied();},
-	    						this.cfg.cytoscapeWebPath, this.cfg.flashInstallerPath);
+
+	    var onVisReadyListener = function(){_self.onVisReady();};
+	    var afterLayoutListener = function(){_self.onLayoutApplied();};
 	    
+	    
+//	    this.graphAdapter = new PrimeFaces.widget.CswGraphAdapter(this.cfg.id, cfg.graphModel, null,
+//	    						function(){_self.onVisReady();},
+//	    						function(){_self.onLayoutApplied();},
+//	    						this.cfg.cytoscapeWebPath, this.cfg.flashInstallerPath);
+	    
+	    var graphAdapterFactory = new PrimeFaces.widget.GraphAdapterFactory();
+	    this.graphAdapter = graphAdapterFactory.createGraphAdapter(this.cfg.graphRenderer, this.cfg.id, this.cfg.graphModel, null, onVisReadyListener, 
+												afterLayoutListener, this.cfg);			    	    
+	    this.graphAdapter.init();
 	},
 	
 	
@@ -396,35 +400,46 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 		var _self = this;
 		//FIXME: create a generic drapdrop event
 		this.graphAdapter.addDragDropListener( 
-				function(event){
-					var startSync = -1;
-					//update all  dragged nodes
-					var selectedNodes = _self.graphAdapter.getSelectedNodes();
-					for (var i = 0; i < selectedNodes.length; i++) {						
-						var node = selectedNodes[i];
-						//is dragged node selected ?
-						if(event.target.data.id == node.getId()){
-							startSync = i;
-						}
-						if(startSync != -1){
-							_self.syncStruct.push({actionType:"UPDATE_NODE", target: _self._toGenericNode(node)});							
-						}
-					}					
-					if(startSync != -1){
-						//update prévious selected nodes 
-						for (var i = 0; i < startSync; i++) {						
-							_self.syncStruct.push({actionType:"UPDATE_NODE", target: _self._toGenericNode(selectedNodes[i])});							
-						}
-					}else{
-						//update only dragged node
-						var draggedNode = _self.graphAdapter.getNode(event.target.data.id);
-						_self.syncStruct.push({actionType:"UPDATE_NODE", target:_self._toGenericNode(draggedNode)});						
+				function(arrDraggedNodes){
+
+					for (var i = 0; i < arrDraggedNodes.length; i++) {						
+						var draggedNode = arrDraggedNodes[i];
+						_self.syncStruct.push({actionType:"UPDATE_NODE", target: _self._toGenericNode(draggedNode)});							
 					}
 					
 					//synchronize only if ajax = true
 					if(_self.cfg.ajax){
 						_self.synchronize();
 					}
+										
+//					var startSync = -1;
+//					//update all  dragged nodes
+//					var selectedNodes = _self.graphAdapter.getSelectedNodes();
+//					for (var i = 0; i < selectedNodes.length; i++) {						
+//						var node = selectedNodes[i];
+//						//is dragged node selected ?
+//						if(event.target.data.id == node.getId()){
+//							startSync = i;
+//						}
+//						if(startSync != -1){
+//							_self.syncStruct.push({actionType:"UPDATE_NODE", target: _self._toGenericNode(node)});							
+//						}
+//					}					
+//					if(startSync != -1){
+//						//update prévious selected nodes 
+//						for (var i = 0; i < startSync; i++) {						
+//							_self.syncStruct.push({actionType:"UPDATE_NODE", target: _self._toGenericNode(selectedNodes[i])});							
+//						}
+//					}else{
+//						//update only dragged node
+//						var draggedNode = _self.graphAdapter.getNode(event.target.data.id);
+//						_self.syncStruct.push({actionType:"UPDATE_NODE", target:_self._toGenericNode(draggedNode)});						
+//					}
+//					
+//					//synchronize only if ajax = true
+//					if(_self.cfg.ajax){
+//						_self.synchronize();
+//					}
 			}
 		);
 	},
@@ -579,7 +594,7 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 * convert adapted node to generic structure for exchange with server
 	 */
 	_toGenericNode: function(node){
-		return {id:node.getId(), label:node.getLabel(), x:node.getX(), y:node.getY(), size:node.getSize(), shape:node.getShape(), color:node.getColor(), datas:node.getDatas()};
+		return {id:node.getId(), label:node.getLabel(), x:node.getX(), y:node.getY(), size:node.getSize(), shape:node.getShape().toUpperCase(), color:node.getColor(), datas:node.getDatas()};
 	},
 
 	/**
@@ -598,7 +613,7 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	_toGenericEdge: function(edge){
 		return {id:edge.getId(), label:edge.getLabel(), sourceNodeId:edge.getSource().getId(), targetNodeId:edge.getTarget().getId(), 
-				directed:edge.getDirected(),  width: edge.getWidth() , color:edge.getColor(), shape:edge.getShape(), datas:edge.getDatas()};
+				directed:edge.getDirected(),  width: edge.getWidth() , color:edge.getColor(), shape:edge.getShape().toUpperCase(), datas:edge.getDatas()};
 	},
 
 	

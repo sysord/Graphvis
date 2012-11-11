@@ -1,5 +1,6 @@
 package graphvis.demo.ajax;
 
+
 import graphvis.demo.common.GraphModelGenerator;
 
 import java.util.Date;

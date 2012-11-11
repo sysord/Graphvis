@@ -2,6 +2,12 @@ package org.primefaces.model.graphvis.impl;
 
 import org.primefaces.model.graphvis.GraphvisModelElement;
 
+
+/**
+ * Abstract Graphvis model element
+ * 
+ * http://www.sysord.com
+ */
 public abstract class GraphvisModelElementImpl implements GraphvisModelElement {
 
 	private static final long serialVersionUID = 1L;

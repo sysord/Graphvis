@@ -37,7 +37,7 @@ public class DemoDijBean {
 	 */
 	public void generateGraph(){
 
-		GraphModelGenerator.fillGraphModel(graphModel, 10, 30, 100);
+		GraphModelGenerator.fillGraphModel(graphModel, 10, 30, 50);
 		FacesContext context = FacesContext.getCurrentInstance();	
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Graph generated with: " 
 							+ graphModel.getNodes().size() + " nodes and " 

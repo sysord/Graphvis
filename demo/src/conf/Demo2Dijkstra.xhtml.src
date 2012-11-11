@@ -1,0 +1,15 @@
+
+<p:growl id="growl" />
+		
+<h:form id="mainForm">	
+	<div style="height:500px;width:100%; border:solid 1px; padding:2px">
+		<p:messages id="messages" showDetail="true"/>
+		<div id="dijGraphContainer" style="height:70%;">
+			<p:graphvis2 id="dijGraph" title="Graphe Dijkstra" value="#{demoDijBean.graphModel}" style="border: 1px solid #ddd;margin: Opx 0;"
+				styleClass="ui-datatable ui-widget" widgetVar="graph" >
+			</p:graphvis2> 
+	 	</div>
+		<p:commandButton id="cmdGenerate" value="Generate Graph" action="#{demoDijBean.generateGraph()}" onsuccess="graph.synchronize(true);" update=":growl mainForm:messages"/>
+		<p:commandButton id="cmdFindPath" value="Find path" action="#{demoDijBean.applyDijkstra()}" onsuccess="graph.synchronize();" update=":growl mainForm:messages" />
+ 	</div>
+</h:form>

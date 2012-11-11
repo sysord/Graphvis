@@ -27,13 +27,13 @@
 					On "Generate Graph" click, a graph model is randomly generated on the server side and drawn on the client side.<br/>
 					On "Find path" click, server apply the Dijkstra algorithm looking for the shortest path.
 					if a path is found, server apply red color at all path elements, on the client side the graph 
-					is updated and the shortest path is shown.  <a href="http://www.sysord.com/Sysord/ressource_graphvis_demo_dijkstra.jsf"> [online demo]</a>   
+					is updated and the shortest path is shown.  <a href="http://www.sysord.com/Sysord/ressource_graphvis2_demo_dijkstra.jsf"> [online demo]</a>   
 				</p>				
 				<p:messages id="messages" showDetail="true"/>
 				<div id="dijGraphContainer" style="height:70%;">
-					<p:graphvis id="dijGraph" title="Graphe Dijkstra" value="#{demoDijBean.graphModel}" 
+					<p:graphvis2 id="dijGraph" title="Graphe Dijkstra" value="#{demoDijBean.graphModel}" style="border: 1px solid #ddd;margin: Opx 0;"
 						styleClass="ui-datatable ui-widget" widgetVar="graph" >
-					</p:graphvis> 
+					</p:graphvis2> 
 			 	</div>
 				<p:commandButton id="cmdGenerate" value="Generate Graph" action="#{demoDijBean.generateGraph()}" onsuccess="graph.synchronize(true);" update=":growl mainForm:messages"/>
 				<p:commandButton id="cmdFindPath" value="Find path" action="#{demoDijBean.applyDijkstra()}" onsuccess="graph.synchronize();" update=":growl mainForm:messages" />
@@ -42,9 +42,9 @@
 		
 		<p:tabView id="sourceTabView">
 
-			<p:tab  title="DemoDijkstra.xhtml">
+			<p:tab  title="Demo2Dijkstra.xhtml">
 				<pre class="brush: xml" >
-					<h:outputText value="#{sourceBean.getSource('DemoDijkstra.xhtml.src')}" />				
+					<h:outputText value="#{sourceBean.getSource('Demo2Dijkstra.xhtml.src')}" />				
 				</pre>
 			</p:tab>
 		

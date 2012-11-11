@@ -4,6 +4,7 @@ package org.primefaces.model.graphvis;
  * 
  * Graph edge  
  *
+ * http://www.sysord.com
  */
 public interface GraphvisEdge extends GraphvisModelElement{
 
@@ -19,7 +20,11 @@ public interface GraphvisEdge extends GraphvisModelElement{
 		DIAMOND,
 		CIRCLE,
 		OCTAGON,
-		PARALLELOGRAM,		
+		PARALLELOGRAM,
+		
+		TEE,
+		TRIANGLE,
+		SQUARE,
 	}
 
 	/**

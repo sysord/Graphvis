@@ -9,3 +9,7 @@
 .primefacesAttributes th{
 	font-weight: bold;
 }
+
+h2, h3 {
+	margin: 2px;
+}

@@ -28,12 +28,13 @@
 					Due to the ajax=true attribute, every graph change on the client side is sent to the server.<br/>
 					Ajax behaviors has been set and Ajax request are fired on selection or unselection events.<br/>
 					After every Ajax Request the textArea at the bottom of the graph is updated with a dump of 
-					the server side model. <a href="http://www.sysord.com/Sysord/ressource_graphvis_demo_ajaxBehaviors.jsf"> [online demo]</a>			
+					the server side model. <a href="http://www.sysord.com/Sysord/ressource_graphvis2_demo_ajaxBehaviors.jsf"> [online demo]</a>			
 				</p>
 				<div id="dijGraphContainer" style="height:75%;">
 					
-					<p:graphvis id="graph"  value="#{demoAjaxBehaviorsBean.graphModel}"  
-						widgetVar="myGraph" ajax="true" update ="mainForm:txtModelDescription">
+					<p:graphvis2 id="graph"  value="#{demoAjaxBehaviorsBean.graphModel}"  
+						widgetVar="myGraph" ajax="true" update ="mainForm:txtModelDescription" 
+						style="border: 1px solid #ddd;margin: Opx 0;">
 										
 						<p:ajax event="select" listener="#{demoAjaxBehaviorsBean.onSelectItems}" update=":growl" />
 		 				<p:ajax event="unselect" listener="#{demoAjaxBehaviorsBean.onUnselectItems}" update=":growl" />
@@ -42,7 +43,7 @@
  						<p:ajax event="edgeSelect" listener="#{demoAjaxBehaviorsBean.onSelectEdges}" update=":growl" />
  						<p:ajax event="edgeUnselect" listener="#{demoAjaxBehaviorsBean.onUnselectEdges}" update=":growl" />					
 										
-					</p:graphvis>
+					</p:graphvis2>
 												 
 			 	</div>			 	
 		 	</div>
@@ -54,22 +55,17 @@
 					<br/><br/><b><h:outputText value="Style:"/></b> 
 					<h:panelGrid columns = "2" style="font-size:10px">
 						<h:outputText value="Layout:"/> 
-						<p:selectOneMenu label="Shape:" widgetVar="layoutSelector" onchange="myGraph.doLayout(layoutSelector.value);" >
-							<f:selectItem itemLabel="ForceDirected" itemValue="ForceDirected" />
-							<f:selectItem itemLabel="Circle" itemValue="Circle" />
-							<f:selectItem itemLabel="Radial" itemValue="Radial" />
-							<f:selectItem itemLabel="Tree" itemValue="Tree" />
+						<p:selectOneMenu  widgetVar="layoutSelector" onchange="myGraph.doLayout(this.value);" >
+							<f:selectItem itemLabel="Random" itemValue="randomLayout" />
+							<f:selectItem itemLabel="Arbor" itemValue="arborLayout" />
+							<f:selectItem itemLabel="Grid" itemValue="gridLayout" />
 						</p:selectOneMenu>
 
 						<h:outputText value="Shape:"/> 
-						<p:selectOneMenu label="Shape:" widgetVar="shapeSelector" onchange="addLogMessage(shapeSelector.value);" >
+						<p:selectOneMenu  widgetVar="shapeSelector">
 							<f:selectItem itemLabel="ELLIPSE" itemValue="ELLIPSE" />
 							<f:selectItem itemLabel="RECTANGLE" itemValue="RECTANGLE" />
 							<f:selectItem itemLabel="TRIANGLE" itemValue="TRIANGLE" />
-							<f:selectItem itemLabel="DIAMOND" itemValue="DIAMOND" />
-							<f:selectItem itemLabel="HEXAGON" itemValue="HEXAGON" />
-							<f:selectItem itemLabel="OCTAGON" itemValue="OCTAGON" />
-							<f:selectItem itemLabel="PARALLELOGRAM" itemValue="PARALLELOGRAM" />
 						</p:selectOneMenu>
 						<h:outputText value="Color:"/> 
 						<p:colorPicker id="colorPicker" widgetVar="colorPicker" style="vertical-align:top"/>
@@ -136,7 +132,7 @@
 			
 			function getSelectedColor(){
 				//color from the colorpicker widget
-				return $('.ui-colorpicker_hex > :input').val();
+				return '#' + $('.ui-colorpicker_hex > :input').val();
 			}
 
 			function arrIdsToString(arrItems){
@@ -151,9 +147,9 @@
   
 		<p:tabView id="sourceTabView">
 
-			<p:tab  title="DemoAjaxBehaviors.xhtml">
+			<p:tab  title="Demo2AjaxBehaviors.xhtml">
 				<pre class="brush: xml" >
-					<h:outputText value="#{sourceBean.getSource('DemoAjaxBehaviors.xhtml.src')}" />				
+					<h:outputText value="#{sourceBean.getSource('Demo2AjaxBehaviors.xhtml.src')}" />				
 				</pre>
 			</p:tab>
 		

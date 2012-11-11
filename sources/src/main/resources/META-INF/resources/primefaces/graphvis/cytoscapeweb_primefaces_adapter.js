@@ -1,30 +1,42 @@
-/*
- * Cytoscape Graph Class
+
+/**
+ * CytoscapeWeb Adapter Classes
+ * 
+ * http://www.sysord.com
  */
 PrimeFaces.widget.CswGraphAdapter = function(divId, graphModel, visualStyle, onVisReadyListener, afterLayoutListener, cytoscapeWebPath, flashInstallerPath) {
+	
 
+	this.graphModel = graphModel;
 
-    //--------------------------------------------------------
-    // create visualisation and draw model    
-    //--------------------------------------------------------
+	if(onVisReadyListener){
+		this.onVisReadyListener = onVisReadyListener;
+	}
+	
+	if(afterLayoutListener){
+		this.afterLayoutListener = afterLayoutListener;
+	}
+
+    //-----------------------
+    // create visualisation
+    //-----------------------
     var options = {
         swfPath: cytoscapeWebPath,
         flashInstallerPath: flashInstallerPath
     };  
-    
-    
+        
     this.vis = new org.cytoscapeweb.Visualization(divId, options);
     
 	//create CytoscapeGraphModel empty model
-	var cswModel = {
+	this.cswModel = {
 		data: 	{
 			nodes: [],
 			edges: [],									
 		} 
 	};
 
-    //TODO: prévoir extension du schéma
-	cswModel.dataSchema = { nodes: [ 
+    //TODO: extends schema
+	this.cswModel.dataSchema = { nodes: [ 
 								{ name: "label", type: "string" },
 								{ name: "x", type: "number", defValue: 0 },
 								{ name: "y", type: "number", defValue: 0 },
@@ -41,8 +53,10 @@ PrimeFaces.widget.CswGraphAdapter = function(divId, graphModel, visualStyle, onV
     			};	
 
 
-	if(!visualStyle){
-		visualStyle = {
+	if(visualStyle){
+		this.visualStyle = visualStyle;
+	}else{
+		this.visualStyle = {
 				nodes: {
 					//shapes
 					shape: { passthroughMapper: { attrName: "shape" } },
@@ -60,35 +74,39 @@ PrimeFaces.widget.CswGraphAdapter = function(divId, graphModel, visualStyle, onV
 				},
 
 			};
-
 	}
-
-	
-    //draw an empty graph 
-    this.vis.draw({ network:cswModel, visualStyle:visualStyle });    	
-
-    //attach after layout listener
-    if(afterLayoutListener){
-    	this.vis.addListener("layout","", afterLayoutListener);
-    }
-	//this.vis.addListener("layout","", function(){console.log('POST LAYOUT')});
-    
-    //attach onReady listener
-    var _self = this;
-    
-    this.vis.ready(function(){
-    	_self._convertGraphModel(graphModel);
-    	_self.vis.edgeLabelsVisible(true);
-    	if(onVisReadyListener){
-    		onVisReadyListener();
-    	}
-    });        
-
-    
+  
 };
 
 PrimeFaces.widget.CswGraphAdapter.prototype = { 
 
+	init: function(){
+	    
+	    //--------------------------------------------------------
+	    // draw model    
+	    //--------------------------------------------------------
+
+		//draw an empty graph 
+	    this.vis.draw({ network:this.cswModel, visualStyle:this.visualStyle });    	
+
+	    //attach after layout listener
+	    if(this.afterLayoutListener){
+	    	this.addAfterLayoutListener(this.afterLayoutListener);
+	    }
+	    
+	    //attach onReady listener
+	    var _self = this;
+	    
+	    this.vis.ready(function(){
+	    	_self._convertGraphModel(_self.graphModel);
+	    	_self.vis.edgeLabelsVisible(true);
+	    	if(_self.onVisReadyListener){
+	    		_self.onVisReadyListener();
+	    	}
+	    });        		
+	},
+
+		
 	/**
 	 * Create CytoscapeWebModel from generic model
 	 * Generic model Structure:
@@ -388,12 +406,42 @@ PrimeFaces.widget.CswGraphAdapter.prototype = {
 		);
 	},
 
+	addAfterLayoutListener: function(listener){
+    	this.vis.addListener("layout","", listener);
+	},
+
 	addDragDropListener: function(listener){
 		var _self = this;
-		//FIXME: create a generic dragdrop event
 		gv_AddDragStopListener(this.vis, 
 			function(cswEvent){
-				listener(cswEvent);
+			
+				var draggedNodes = [];
+			
+				var startDraggedIndex = -1;
+				var selectedNodes = _self.getSelectedNodes();
+				for (var i = 0; i < selectedNodes.length; i++) {						
+					var node = selectedNodes[i];
+					//is dragged node selected ?
+					if(cswEvent.target.data.id == node.getId()){
+						startDraggedIndex = i;
+					}
+					if(startDraggedIndex != -1){
+						draggedNodes.push(node);							
+					}
+				}
+				
+				if(startDraggedIndex != -1){
+					//add prévious selected nodes 
+					for (var i = 0; i < startDraggedIndex; i++) {
+						draggedNodes.push(selectedNodes[i]);
+					}
+				}else{
+					//add only dragged node
+					draggedNodes.push(_self.getNode(cswEvent.target.data.id));
+				}
+				
+				//delegate to listener
+				listener(draggedNodes);
 			}
 		);
 	},
@@ -501,7 +549,7 @@ PrimeFaces.widget.CswNodeAdapter.prototype = {
 	},
 
 	setShape: function(shape) {
-		this.cwsNode.data.shape = shape;
+		this.cwsNode.data.shape = gv_convertNodeShape(shape);
 		this.update();
 	},
 	
@@ -564,11 +612,14 @@ PrimeFaces.widget.CswEdgeAdapter.prototype = {
 	},
 
 	setShape: function(shape) {
-		this.cwsEdge.data.shape = shape;
+		this.cwsEdge.data.shape = gv_convertEdgeShape(shape);;
 		this.update();
 	},
 	
 	getShape: function() {
+		if(this.cwsEdge.data.shape == null){
+			return 'NONE';
+		}
 		return this.cwsEdge.data.shape;
 	},
 

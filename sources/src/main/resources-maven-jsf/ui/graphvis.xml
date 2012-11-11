@@ -172,5 +172,8 @@
 		<resource>
 			<name>graphvis/graphvis.js</name>
 		</resource>
+		<resource>
+			<name>graphvis/graphAdapterFactory.js</name>
+		</resource>
 	</resources>
 </component>

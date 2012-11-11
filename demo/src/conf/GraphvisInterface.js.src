@@ -14,9 +14,8 @@ PrimeFaces.widget.Graphvis = PrimeFaces.widget.BaseWidget.extend({
 	/**
 	 * apply layout
 	 * @param layout layout name
-	 * @param synchronizeAfterLayout if true force synchronization after layout even if ajax attribute is set to false
 	 */
-	doLayout: function(layout, synchronizeAfterLayout){},
+	doLayout: function(layout){},
 	
 	/**
 	 * get node by id

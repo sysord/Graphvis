@@ -2025,7 +2025,6 @@
         },
         
         _parseJSON: function(s) {
-        	if (s != null) { s = s.replace(/\n/g, '\\n').replace(/\t/g, '\\t'); }
         	return JSON.parse(s);
         }
     };
@@ -2570,6 +2569,9 @@
      *                                                Any lesser distances will be treated as the minimum.</li>
      *         <li><code>maxDistance</code> {Number}: The maximum distance over which forces are exerted. 
      *                                                Any greater distances will be ignored.</li>
+     *         <li><code>seed</code> {Number}: Optional positive integer which is used to set the random seed for generating the initial node positions.
+     *                                         Force-directed layouts are non-deterministic by nature, but this option can be used to reproduce the same topology.
+     *                                         Just leave this property <code>undefined</code> or set <code>0</code> if you want to keep the layout non-deterministic (i.e. a random seed is used).</li>
      *         <li><code>autoStabilize</code> {Boolean}: A common problem with force-directed layouts is that they can be highly unstable.
      *                                                   If this parameter is <code>true</code> and the edges are being stretched too much
      *                                                   between each iteration, Cytoscape Web automatically tries to stabilize 
@@ -2736,7 +2738,12 @@
      *     <li><code>size</code> {Number}: Node size, in pixels.
      *                                     It has the same effect of setting the same value (or mapper) to both <code>width</code> and <code>height</code>.
      *                                     The default value is 24.
-     *                                     The size of compound nodes is automatically calculated, so setting <code>compoundSize</code> has no effect.</li>
+     *                                     You can also set <code>"auto"</code> if you want to let Cytoscape Web calculate the size of the node automatically so it encloses its label.</li>
+     *     <li><code>compoundSize</code> {String}: The size of compound nodes is always automatically calculated, so the actual size cannot be set.
+     *                                             This property accepts two values:
+     *                                             <ul><li><code>auto</code> (default): compound nodes are sized to fit their child labels inside.</li>
+     *                                                 <li><code>ignoreLabels</code>: child labels are ignored when calculating the compound node size.</li>
+     *                                             </ul></li>
      *     <li><code>width</code> {Number}: Node width, in pixels. It is not set by default.
      *                                      If set, it overrides the value returned by <code>size</code>.
      *                                      Because the size of compound nodes is automatically calculated, setting <code>compoundWidth</code> has no effect.</li>
